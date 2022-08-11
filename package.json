@@ -19,7 +19,6 @@
     "@pixi/math": "^6.5.1",
     "@pixi/text": "^6.5.1",
     "@pixi/utils": "^6.5.1",
-    "tweakpane": "^3.1.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
@@ -37,11 +36,14 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
+    "tweakpane": "^3.1.0",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.0"
   },
   "scripts": {
     "build": "rollup -c --environment INCLUDE_DEPS,OUTPUT:dist",
-    "test": "rollup -c --environment INCLUDE_DEPS,OUTPUT:testout && rollup --config ./rollup.test.js  --environment INCLUDE_DEPS,OUTPUT:testout && start ./testout/editor/blowfish-resizer-editor.html"
+    "test": "webpack serve --config ./webpack.config.js",
+    "testBuild": "webpack --config ./webpack.config.build.js"
   }
 }
