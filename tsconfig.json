@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "./lib/",
+        "strict": true,
+        "noImplicitAny": true,
+        "module": "ES6",
+        "target": "ES5",
+        "lib": ["ESNext", "DOM"],
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+    },
+    "include": ["src/**/*"],
+}

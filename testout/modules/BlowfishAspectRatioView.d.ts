@@ -1,0 +1,32 @@
+import { Point } from '@pixi/math';
+import { EventEmitter } from '@pixi/utils';
+import BlowfishEditor, { IMixedPool } from './BlowfishEditor';
+export default class BlowfishAspectRatioView extends EventEmitter {
+    private pool;
+    private controller;
+    private prevSelectedFish;
+    private app;
+    private gSeparators;
+    private gCurve;
+    private gIndicator;
+    private resolutionLabels;
+    private isDragPointer;
+    private isSnap;
+    private prevParent;
+    private resizeObserver?;
+    constructor(pool: IMixedPool, controller: BlowfishEditor);
+    get HTMLElement(): HTMLCanvasElement;
+    Update(): void;
+    SetAspectRatioByPointerPosition(position: Point): void;
+    RecreateLabels(): void;
+    DrawSeparators(): void;
+    MoveLabels(): void;
+    DrawCurve(): void;
+    DrawIndicator(): void;
+    GetSnapAspectRatio(aspectRatio: number): number | undefined;
+    GetYByAspectRatio(aspectRatio: number): number;
+    GetXByAspectRatio(aspectRatio: number): number;
+    GetAspectRatioByX(x: number): number;
+    ChangeParentHandler(parent: any): void;
+    ChangeSizeHandler(width: number, height: number): void;
+}

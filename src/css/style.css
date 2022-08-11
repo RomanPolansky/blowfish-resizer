@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+#gui {
+    width: 100%;
+}
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.rightbar {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 500px;
+    width: 400px;
+    position: relative;
+}
+.rightbar__listElements {
+    flex: 1;
+    background-color: #111;
+}
+.rightbar__editorParams {
+    flex: 2;
+    background-color: #777;
+}
+.leftbar {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    background-color: #666;
+    flex: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content__iframe {
+    width: 100px;
+    height: 100px;
+    background: #fff;
+}
+.timeline {
+    background-color: #444;
+    min-height: 40px;
+    max-height: 200px;
+    height: 100px;
+    position: relative;
+}
+#resize {
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 4px;
+    cursor: s-resize;
+    z-index: 99;
+}
+#resize2 {
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    cursor: w-resize;
+    z-index: 99;
+}
+.aspectRatioLine {
+    width: 90%;
+    height: calc(100% - 4px);
+    top: 4px;
+    position: absolute;
+}
+.aspectRatioButton {
+    left: 90%;
+    width: 10%;
+    height: 100%;
+    position: absolute;
+}
+#game_iframe {
+    box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}

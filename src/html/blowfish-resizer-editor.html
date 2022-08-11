@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blowfish</title>
+
+    <style>
+        :root {
+            --tp-base-background-color: hsla(230, 7%, 20%, 1.00);
+            --tp-base-shadow-color: hsla(0, 0%, 0%, 0.2);
+            --tp-button-background-color: hsla(230, 7%, 70%, 1.00);
+            --tp-button-background-color-active: hsla(230, 7%, 85%, 1.00);
+            --tp-button-background-color-focus: hsla(230, 7%, 80%, 1.00);
+            --tp-button-background-color-hover: hsla(230, 7%, 75%, 1.00);
+            --tp-button-foreground-color: hsla(230, 7%, 20%, 1.00);
+            --tp-container-background-color: hsla(230, 7%, 75%, 0.10);
+            --tp-container-background-color-active: hsla(230, 7%, 75%, 0.25);
+            --tp-container-background-color-focus: hsla(230, 7%, 75%, 0.20);
+            --tp-container-background-color-hover: hsla(230, 7%, 75%, 0.15);
+            --tp-container-foreground-color: hsla(230, 7%, 75%, 1.00);
+            --tp-groove-foreground-color: hsla(230, 7%, 0%, 0.20);
+            --tp-input-background-color: hsla(230, 7%, 0%, 0.20);
+            --tp-input-background-color-active: hsla(230, 7%, 0%, 0.35);
+            --tp-input-background-color-focus: hsla(230, 7%, 0%, 0.30);
+            --tp-input-background-color-hover: hsla(230, 7%, 0%, 0.25);
+            --tp-input-foreground-color: hsla(230, 7%, 75%, 1.00);
+            --tp-label-foreground-color: hsla(230, 7%, 75%, 0.70);
+            --tp-monitor-background-color: hsla(230, 7%, 0%, 0.20);
+            --tp-monitor-foreground-color: hsla(230, 7%, 75%, 0.70);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #gui {
+            width: 100%;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        .rightbar {
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+            max-width: 500px;
+            width: 400px;
+            position: relative;
+        }
+        .rightbar__listElements {
+            flex: 1;
+            background-color: #111;
+        }
+        .rightbar__editorParams {
+            flex: 2;
+            background-color: #777;
+        }
+        .leftbar {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            background-color: #666;
+            flex: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content__iframe {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+        }
+        .timeline {
+            background-color: #444;
+            min-height: 40px;
+            max-height: 200px;
+            height: 100px;
+            position: relative;
+        }
+        #resize {
+            background-color: #ccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 4px;
+            cursor: s-resize;
+            z-index: 99;
+        }
+        #resize2 {
+            background-color: #ccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            cursor: w-resize;
+            z-index: 99;
+        }
+        .aspectRatioLine {
+            width: 90%;
+            height: calc(100% - 4px);
+            top: 4px;
+            position: absolute;
+        }
+        .aspectRatioButton {
+            left: 90%;
+            width: 10%;
+            height: 100%;
+            position: absolute;
+        }
+        #game_iframe {
+            box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+    </style>
+    <script src="./blowfish-resizer-editor.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="leftbar">
+            <div id="content" class="content">
+                <iframe class="content__iframe" id="game_iframe" src="" frameborder="0"></iframe>
+            </div>
+            <div class="timeline">
+                <div id="resize"></div>
+                <div id="aspectRatioLine" style="top: 4px; width: 100%; height: calc(100% - 4px); position: absolute;">
+                </div>
+            </div>
+        </div>
+        <div class="rightbar">
+            <div id="resize2"></div>
+            <div id="rightbar__listElements" class="rightbar__listElements"></div>
+            <div id="editor" class="rightbar__editorParams"></div>
+        </div>
+    </div>
+</body>
+</html>
