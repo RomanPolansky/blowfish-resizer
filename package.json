@@ -4,9 +4,9 @@
   "license": "MIT",
   "version": "0.0.11",
   "description": "blowfish resizer",
-  "main": ".lib/index.ts",
-  "types": ".lib/index.d.ts",
-  "module": ".lib/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "lib/index.js",
   "files": [
     "lib"
   ],
