@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import BlowfishEditor from './modules/BlowfishEditor'
+import BlowfishEditor from './BlowfishEditor'
 
 window.addEventListener('load', () => {
     const iframe = document.getElementById('game_iframe') as HTMLIFrameElement

@@ -1,17 +1,17 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
+import IBlowfish from '../interfaces/IBlowfish'
 import BlowfishElement from './BlowfishElement'
 import BlowfishPool from './BlowfishPool'
 
-interface IResolutionElement { width: number, height: number, aspectRatio?: number }
-
-class Blowfish {
+class Blowfish implements IBlowfish {
     public name: string
-    public defaultParams: any
-    public defaultFuncSetParams: any
-    public resolutions: IResolutionElement[] = []
     public mapElements: any = {}
-    public prevScreenSize = { width: 1, height: 1 }
+    public resolutions: { width: number, height: number, aspectRatio?: number }[] = []
+
+    private defaultParams: any
+    private defaultFuncSetParams: any
+    private prevScreenSize = { width: 1, height: 1 }
 
     constructor(
         name: string,
@@ -19,7 +19,7 @@ class Blowfish {
         curvesConfig: any,
         defaultParams: any,
         defaultFuncSetParams: any,
-        resolutions: IResolutionElement[] = [
+        resolutions: { width: number, height: number, aspectRatio?: number }[] = [
             { width: 20.0, height: 9.0 },
             { width: 19.5, height: 9.0 },
             { width: 16.0, height: 9.0 },
@@ -43,15 +43,15 @@ class Blowfish {
         BlowfishPool.Instance.Add(this)
     }
 
-    get MaxAspectRatio() {
-        return this.resolutions[this.resolutions.length - 1].aspectRatio
+    public get MaxAspectRatio() {
+        return this.resolutions[this.resolutions.length - 1].aspectRatio as number
     }
 
-    get MinAspectRatio() {
-        return this.resolutions[0].aspectRatio
+    public get MinAspectRatio() {
+        return this.resolutions[0].aspectRatio as number
     }
 
-    SetResolutions(resolutions: IResolutionElement[]) {
+    private SetResolutions(resolutions: { width: number, height: number, aspectRatio?: number }[]) {
         this.resolutions = resolutions
         for (let i = 0; i < this.resolutions.length; i++) {
             this.resolutions[i].aspectRatio = this.resolutions[i].width / this.resolutions[i].height
@@ -59,7 +59,7 @@ class Blowfish {
         this.resolutions.sort((a, b) => ((a.aspectRatio! < b.aspectRatio!) ? -1 : 1))
     }
 
-    SetElements(elements: any, curvesConfig: any) {
+    private SetElements(elements: any, curvesConfig: any) {
         this.mapElements = {}
 
         for (const elementName in elements) {
@@ -94,7 +94,7 @@ class Blowfish {
         this.CreateDefaultCurvePointsForElements()
     }
 
-    FixParams(defParams: any, fixParams: any) {
+    private FixParams(defParams: any, fixParams: any) {
         const params: any = {}
         if (fixParams != null) {
             for (const paramName in defParams) {
@@ -104,7 +104,7 @@ class Blowfish {
         return params
     }
 
-    CreateDefaultCurvePointsForElements() {
+    private CreateDefaultCurvePointsForElements() {
         for (const elementName in this.mapElements) {
             const element = this.mapElements[elementName]
             if (element.points.length === 0) {
@@ -114,7 +114,7 @@ class Blowfish {
         }
     }
 
-    Update(width = this.prevScreenSize.width, height = this.prevScreenSize.height) {
+    public Update(width = this.prevScreenSize.width, height = this.prevScreenSize.height) {
         this.prevScreenSize.width = width
         this.prevScreenSize.height = height
 

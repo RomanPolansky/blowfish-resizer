@@ -1,0 +1,26 @@
+{
+  "name": "editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pixi/core": "^6.5.1",
+    "@pixi/display": "^6.5.1",
+    "@pixi/graphics": "^6.5.1",
+    "@pixi/interaction": "^6.5.1",
+    "@pixi/math": "^6.5.1",
+    "@pixi/text": "^6.5.1",
+    "@pixi/utils": "^6.5.1",
+    "tweakpane": "^3.1.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.3.1"
+  }
+}

@@ -1,16 +1,21 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { EventEmitter } from '@pixi/utils'
-import Blowfish from './Blowfish'
+import IBlowfishPool from '../interfaces/IBlowfishPool'
+import IBlowfish from '../interfaces/IBlowfish'
+import IContentWindow from '../interfaces/IContentWindow'
 
-export default class BlowfishPool extends EventEmitter {
-    public fishs: Blowfish[] = []
+declare global {
+    interface Window extends IContentWindow {}
+}
+
+export default class BlowfishPool extends EventEmitter implements IBlowfishPool {
+    public fishs: IBlowfish[] = []
     public onChangeCallback: Function | null = null
 
     private constructor() {
         super()
     }
 
-    Add(blowfish: Blowfish) {
+    Add(blowfish: IBlowfish) {
         this.fishs.push(blowfish);
         if (typeof this.onChangeCallback === 'function') {
             this.onChangeCallback(this.fishs)

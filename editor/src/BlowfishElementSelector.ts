@@ -1,6 +1,5 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-extraneous-dependencies */
 import { EventEmitter } from '@pixi/utils'
 import * as Tweakpane from 'tweakpane'
 // eslint-disable-next-line import/no-cycle

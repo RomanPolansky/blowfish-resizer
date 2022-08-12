@@ -1,10 +1,15 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-/* eslint-disable import/no-extraneous-dependencies */
 import { EventEmitter } from '@pixi/utils'
 import * as Tweakpane from 'tweakpane'
 import BlowfishEditor, { IMixedPool } from './BlowfishEditor'
 import { BlowfishCurvePointDouble, BlowfishCurvePointSingle } from './CurvePoints'
+
+declare global {
+    interface Window {
+        blowfishClipboard: any
+    }
+}
 
 function compareKeys(a: any, b: any) {
     const aKeys = Object.keys(a).sort()

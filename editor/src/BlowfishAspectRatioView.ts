@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Renderer, extensions as Extensions, BatchRenderer } from '@pixi/core'
 import { Container } from '@pixi/display'
 import { Graphics } from '@pixi/graphics'
@@ -6,7 +5,7 @@ import { InteractionManager } from '@pixi/interaction'
 import { Point, Rectangle } from '@pixi/math'
 import { Text } from '@pixi/text'
 import { EventEmitter, string2hex } from '@pixi/utils'
-import Blowfish from './Blowfish'
+import IBlowfish from '../interfaces/IBlowfish'
 import BlowfishEditor, { IMixedPool } from './BlowfishEditor'
 import { BlowfishCurvePointDouble } from './CurvePoints'
 
@@ -41,7 +40,7 @@ class Application {
 export default class BlowfishAspectRatioView extends EventEmitter {
     private pool: IMixedPool
     private controller: BlowfishEditor
-    private prevSelectedFish: Blowfish | null
+    private prevSelectedFish: IBlowfish | null
 
     private app = new Application()
 

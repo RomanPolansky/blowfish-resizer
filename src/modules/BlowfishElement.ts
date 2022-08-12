@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+import IBlowfishElement from '../interfaces/IBlowfishElement'
 import { BlowfishCurvePoint, BlowfishCurvePointDouble, BlowfishCurvePointSingle } from './CurvePoints'
 
-export default class BlowfishElement {
+export default class BlowfishElement implements IBlowfishElement {
     public fullParams: any
     public points: BlowfishCurvePoint[] = []
 
@@ -15,12 +16,12 @@ export default class BlowfishElement {
         this.fncSetParams = fncSetParams
     }
 
-    Update(aspectRatio: number, screenSize: number, screenScale: number) {
+    private Update(aspectRatio: number, screenSize: number, screenScale: number) {
         const params = this.GetParamsByAspectRatio(aspectRatio)
         this.fncSetParams(this.target, params, screenSize, screenScale)
     }
 
-    AddPoint(aspectRatio: number, paramsIn = null) {
+    public AddPoint(aspectRatio: number, paramsIn = null) {
         if (paramsIn == null) {
             const params = this.GetParamsByAspectRatio(aspectRatio)
             const paramsCopy = JSON.parse(JSON.stringify(params))
@@ -31,14 +32,14 @@ export default class BlowfishElement {
         this.points.sort((a, b) => ((a.aspectRatio < b.aspectRatio) ? -1 : 1))
     }
 
-    AddPointD(aspectRatio: number, priorityLeft: boolean, paramsLeft: any, paramsRight: any) {
+    public AddPointD(aspectRatio: number, priorityLeft: boolean, paramsLeft: any, paramsRight: any) {
         const paramsLeftCopy = JSON.parse(JSON.stringify(paramsLeft))
         const paramsRightCopy = JSON.parse(JSON.stringify(paramsRight))
         this.points.push(new BlowfishCurvePointDouble(aspectRatio, priorityLeft, paramsLeftCopy, paramsRightCopy))
         this.points.sort((a, b) => ((a.aspectRatio < b.aspectRatio) ? -1 : 1))
     }
 
-    RemovePoint(aspectRatio: number) {
+    public RemovePoint(aspectRatio: number) {
         const point = this.TryGetPoint(aspectRatio)
         if (point != null) {
             const i = this.points.indexOf(point)
@@ -46,7 +47,7 @@ export default class BlowfishElement {
         }
     }
 
-    GetParamsByAspectRatio(aspectRatio: number) {
+    public GetParamsByAspectRatio(aspectRatio: number) {
         const point = this.TryGetPoint(aspectRatio)
         if (point != null) return point.GetParamPriority()
 
@@ -71,7 +72,7 @@ export default class BlowfishElement {
         return params;
     }
 
-    FullParamsToParams(fullParams: any) {
+    private FullParamsToParams(fullParams: any) {
         const params: any = {}
         for (const paramName in fullParams) {
             params[paramName] = fullParams[paramName].value
@@ -79,7 +80,7 @@ export default class BlowfishElement {
         return params
     }
 
-    TryGetPoint(aspectRatio: number) {
+    public TryGetPoint(aspectRatio: number) {
         for (let i = 0; i < this.points.length; i++) {
             if (Math.abs(aspectRatio - this.points[i].aspectRatio) < 0.005) {
                 return this.points[i];
@@ -88,7 +89,7 @@ export default class BlowfishElement {
         return null;
     }
 
-    GetLeftPoint(aspectRatio: number) {
+    private GetLeftPoint(aspectRatio: number) {
         let point = null;
         for (let i = 0; i < this.points.length; i++) {
             if (this.points[i].aspectRatio < aspectRatio) {
@@ -98,7 +99,7 @@ export default class BlowfishElement {
         return point;
     }
 
-    GetRightPoint(aspectRatio: number) {
+    private GetRightPoint(aspectRatio: number) {
         for (let i = 0; i < this.points.length; i++) {
             if (this.points[i].aspectRatio > aspectRatio) {
                 return this.points[i];
@@ -107,7 +108,7 @@ export default class BlowfishElement {
         return null;
     }
 
-    LerpParams(startParams: any, endParams: any, t: number) {
+    private LerpParams(startParams: any, endParams: any, t: number) {
         const params: any = {}
         for (const paramName in startParams) {
             const fnInterpolation = this.fullParams[paramName].interpolation

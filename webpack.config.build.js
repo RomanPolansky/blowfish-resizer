@@ -1,42 +1,40 @@
+import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const outputDir = path.resolve(__dirname, './lib')
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
+
 export default {
     mode: 'development',
-    entry: {
-        'script': './test/script.js',
-        'blowfish-resizer-editor': './src/blowfish-resizer-editor.ts',
-    },
+    entry: './src/index.ts',
     output: {
-        path: `${__dirname}/testPublic`,
-        filename: '[name].js',
+        path: outputDir,
+        filename: 'index.js',
+        library: {
+            name: 'blowfish-resizer',
+            type: 'commonjs-module',
+        },
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './test/index.html',
-            filename: 'index.html',
-            inject: false,
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/html/blowfish-resizer-editor.html',
-            filename: 'blowfish-resizer-editor.html',
-            inject: false,
-        }),
-    ],
-    resolve: { extensions: ['.ts', '.js'] },
+    resolve: {
+        extensions: ['.ts', '.js'],
+        alias: {
+            'editor': path.resolve(__dirname, './editor'),
+        },
+    },
     module: {
         rules: [
             {
                 test: /\.js$/,
                 resolve: { fullySpecified: false },
+                use: ['babel-loader'],
             },
             {
                 test: /\.ts$/i,
-                use: ['ts-loader'],
+                use: ['babel-loader', 'ts-loader'],
             },
         ],
     },

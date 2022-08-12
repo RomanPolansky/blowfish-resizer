@@ -12,5 +12,5 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
     },
-    "include": ["src/**/*", "test"],
+    "include": ["src/**/*", "interfaces/**/*"],
 }

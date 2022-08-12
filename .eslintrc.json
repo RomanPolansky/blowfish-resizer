@@ -16,12 +16,10 @@
     ],
     "settings": {
         "import/resolver": {
-            "typescript": {
-                "project": "./tsconfig.json"
-            }
+            "typescript": { "project": "./tsconfig.json" }
         }
     },
-    "ignorePatterns": ["**/dist/*", "**/testout/*", "**/test/*"],
+    "ignorePatterns": ["**/dist/*", "**/lib/*"],
     "rules": {
         "no-redeclare": "off",
         "@typescript-eslint/no-redeclare": ["error"],

@@ -1,49 +1,42 @@
 {
   "name": "blowfish-resizer",
   "author": "any",
-  "license": "ISC",
-  "version": "0.0.9",
+  "license": "MIT",
+  "version": "0.0.11",
   "description": "blowfish resizer",
-  "main": "dist/blowfish-resizer.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/blowfish-resizer.module.js",
+  "main": ".lib/index.ts",
+  "types": ".lib/index.d.ts",
+  "module": ".lib/index.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "type": "module",
   "devDependencies": {
-    "@pixi/core": "^6.5.1",
-    "@pixi/display": "^6.5.1",
-    "@pixi/graphics": "^6.5.1",
-    "@pixi/interaction": "^6.5.1",
-    "@pixi/math": "^6.5.1",
-    "@pixi/text": "^6.5.1",
-    "@pixi/utils": "^6.5.1",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
-    "@web/rollup-plugin-html": "^1.10.3",
-    "css-loader": "^6.7.1",
+    "babel-loader": "^8.2.5",
     "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.4.0",
     "eslint-plugin-import": "^2.26.0",
     "html-webpack-plugin": "^5.5.0",
-    "rollup": "^2.77.2",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "style-loader": "^3.3.1",
     "ts-loader": "^9.3.1",
-    "tweakpane": "^3.1.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0"
   },
+  "dependencies": {
+    "@pixi/utils": "^6.5.1"
+  },
   "scripts": {
-    "build": "rollup -c --environment INCLUDE_DEPS,OUTPUT:dist",
     "test": "webpack serve --config ./webpack.config.js",
-    "testBuild": "webpack --config ./webpack.config.build.js"
+    "build:editor": "node ./publish.config.js",
+    "build:index": "rollup -c",
+    "build:all": "npm run build:editor && npm run build:index"
   }
 }

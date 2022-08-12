@@ -1,21 +1,26 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-import Blowfish from './Blowfish';
+import IBlowfish from '../interfaces/IBlowfish';
+import IBlowfishElement from '../interfaces/IBlowfishElement';
+import IBlowfishPool from '../interfaces/IBlowfishPool';
+import IContentWindow from '../interfaces/IContentWindow';
 import BlowfishAspectRatioView from './BlowfishAspectRatioView'
-import BlowfishElement from './BlowfishElement';
 import BlowfishElementSelector from './BlowfishElementSelector'
 import BlowfishParamsEditor from './BlowfishParamsEditor'
-import BlowfishPool from './BlowfishPool';
 
-export interface IMixedPool extends BlowfishPool {
-    selectedFish: Blowfish | null
-    selectedElement: BlowfishElement | null
+declare global {
+    interface Window extends IContentWindow {}
+}
+
+export interface IMixedPool extends IBlowfishPool {
+    selectedFish: IBlowfish | null
+    selectedElement: IBlowfishElement | null
     aspectRatio: number
     InitMixin: () => void
     ResizeAllFish: () => void
     SetAspectRatio: (aspectRatio: number) => void
-    SetSelectFish: (fish: Blowfish) => void
-    SetSelectElement: (element: BlowfishElement) => void
+    SetSelectFish: (fish: IBlowfish) => void
+    SetSelectElement: (element: IBlowfishElement) => void
     EmitUpdate: () => void
 }
 
@@ -46,12 +51,12 @@ const BlowfishPoolEditorMixin: any = {
         this.emit('update')
     },
 
-    SetSelectFish(fish: Blowfish) {
+    SetSelectFish(fish: IBlowfish) {
         this.selectedFish = fish
         this.emit('update')
     },
 
-    SetSelectElement(element: BlowfishElement) {
+    SetSelectElement(element: IBlowfishElement) {
         this.selectedElement = element
         this.emit('update')
     },
@@ -72,7 +77,7 @@ export default class BlowfishEditor {
 
     Connect() {
         const iframe: HTMLIFrameElement = document.getElementById('game_iframe') as HTMLIFrameElement
-        const pool = iframe.contentWindow?.blowfishPool
+        const pool = iframe.contentWindow!.blowfishPool
         if (pool) {
             this.Init(pool)
         } else {
@@ -80,7 +85,7 @@ export default class BlowfishEditor {
         }
     }
 
-    Init(pool: BlowfishPool) {
+    Init(pool: IBlowfishPool) {
         Object.assign(pool, BlowfishPoolEditorMixin)
         this.pool = pool as IMixedPool
 
@@ -113,11 +118,11 @@ export default class BlowfishEditor {
         this.pool.EmitUpdate()
     }
 
-    SelectFish(fish: Blowfish) {
+    SelectFish(fish: IBlowfish) {
         this.pool.SetSelectFish(fish)
     }
 
-    SelectElement(element: BlowfishElement) {
+    SelectElement(element: IBlowfishElement) {
         this.pool.SetSelectElement(element)
     }
 
@@ -135,17 +140,17 @@ export default class BlowfishEditor {
         }
     }
 
-    AddPoint(element: BlowfishElement, aspectRatio: number, params?: any) {
+    AddPoint(element: IBlowfishElement, aspectRatio: number, params?: any) {
         element.AddPoint(aspectRatio, params)
         this.pool.EmitUpdate()
     }
 
-    AddPointD(element: BlowfishElement, aspectRatio: number, priorityLeft: boolean, paramsLeft: any, paramsRight: any) {
+    AddPointD(element: IBlowfishElement, aspectRatio: number, priorityLeft: boolean, paramsLeft: any, paramsRight: any) {
         element.AddPointD(aspectRatio, priorityLeft, paramsLeft, paramsRight)
         this.pool.EmitUpdate()
     }
 
-    RemovePoint(element: BlowfishElement, aspectRatio: number) {
+    RemovePoint(element: IBlowfishElement, aspectRatio: number) {
         element.RemovePoint(aspectRatio)
         this.pool.EmitUpdate()
     }

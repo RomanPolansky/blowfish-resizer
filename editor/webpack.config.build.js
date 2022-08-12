@@ -1,36 +1,25 @@
 import path from 'path'
-import fs from 'fs'
 import { fileURLToPath } from 'url'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const editorPath = path.resolve(__dirname, './editor/dist')
-if (!fs.existsSync(editorPath)) {
-    throw new Error('editor not found')
-}
-
 export default {
-    mode: 'development',
-    entry: { 'script': './test/script.ts' },
-    devServer: {
-        static: { directory: editorPath },
-        open: './blowfish-resizer-editor.html',
+    mode: 'production',
+    entry: './src/blowfish-resizer-editor.ts',
+    output: {
+        path: `${__dirname}/dist`,
+        filename: 'blowfish-resizer-editor.js',
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './test/index.html',
-            filename: 'index.html',
+            template: './src/blowfish-resizer-editor.html',
+            filename: 'blowfish-resizer-editor.html',
             inject: false,
         }),
     ],
-    resolve: {
-        extensions: ['.ts', '.js'],
-        alias: {
-            'editor': path.resolve(__dirname, './editor'),
-        },
-    },
+    resolve: { extensions: ['.ts', '.js'] },
     module: {
         rules: [
             {
