@@ -1,12 +1,26 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 import IBlowfish from '../interfaces/IBlowfish'
+import IElementsMap from '../interfaces/IElementsMap'
 import BlowfishElement from './BlowfishElement'
 import BlowfishPool from './BlowfishPool'
 
+const defaultResolutions = [
+    { width: 20.0, height: 9.0 },
+    { width: 19.5, height: 9.0 },
+    { width: 16.0, height: 9.0 },
+    { width: 8.0, height: 5.0 },
+    { width: 4.0, height: 3.0 },
+    { width: 1.0, height: 1.0 },
+    { width: 3.0, height: 4.0 },
+    { width: 5.0, height: 8.0 },
+    { width: 9.0, height: 16.0 },
+    { width: 9.0, height: 19.5 },
+    { width: 9.0, height: 20.0 },
+]
 class Blowfish implements IBlowfish {
     public name: string
-    public mapElements: any = {}
+    public mapElements: IElementsMap = {}
     public resolutions: { width: number, height: number, aspectRatio?: number }[] = []
 
     private defaultParams: any
@@ -19,19 +33,7 @@ class Blowfish implements IBlowfish {
         curvesConfig: any,
         defaultParams: any,
         defaultFuncSetParams: any,
-        resolutions: { width: number, height: number, aspectRatio?: number }[] = [
-            { width: 20.0, height: 9.0 },
-            { width: 19.5, height: 9.0 },
-            { width: 16.0, height: 9.0 },
-            { width: 8.0, height: 5.0 },
-            { width: 4.0, height: 3.0 },
-            { width: 1.0, height: 1.0 },
-            { width: 3.0, height: 4.0 },
-            { width: 5.0, height: 8.0 },
-            { width: 9.0, height: 16.0 },
-            { width: 9.0, height: 19.5 },
-            { width: 9.0, height: 20.0 },
-        ],
+        resolutions: { width: number, height: number, aspectRatio?: number }[] = defaultResolutions,
     ) {
         this.name = name
         this.defaultParams = defaultParams

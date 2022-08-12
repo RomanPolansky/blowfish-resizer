@@ -16,7 +16,7 @@ export default class BlowfishElement implements IBlowfishElement {
         this.fncSetParams = fncSetParams
     }
 
-    private Update(aspectRatio: number, screenSize: number, screenScale: number) {
+    public Update(aspectRatio: number, screenSize: { width: number, height: number }, screenScale: number) {
         const params = this.GetParamsByAspectRatio(aspectRatio)
         this.fncSetParams(this.target, params, screenSize, screenScale)
     }
@@ -72,7 +72,7 @@ export default class BlowfishElement implements IBlowfishElement {
         return params;
     }
 
-    private FullParamsToParams(fullParams: any) {
+    public FullParamsToParams(fullParams: any) {
         const params: any = {}
         for (const paramName in fullParams) {
             params[paramName] = fullParams[paramName].value

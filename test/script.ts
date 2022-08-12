@@ -69,9 +69,11 @@ const defaultFuncSetParams = (target: any, params: any, screenSize: any) => {
     target.scale.set(params.scale)
 }
 
+const elements = { block: { target: block } }
+
 const blowfish = new Blowfish(
     'Block',
-    { block: { target: block } },
+    elements,
     config,
     defaultParams,
     defaultFuncSetParams,
