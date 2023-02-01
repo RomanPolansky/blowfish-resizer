@@ -1,28 +1,24 @@
 import Blowfish from '../src/index'
 
 class ObservablePoint {
-    _x = 0
-    _y = 0
+    private _x = 0
+    private _y = 0
+    private _listeners: any[] = []
 
-    _listeners: any[] = []
+    public addListener(listener: any) { this._listeners.push(listener) }
 
-    addListener(listener: any) {
-        this._listeners.push(listener)
-    }
-
-    set(value: number) {
+    public set(value: number) {
         this._x = value
         this._y = value
-
         this._listeners.forEach((listener) => listener(this._x, this._y))
     }
 }
 
 class HtmlBlock {
-    _x = 0
-    _y = 0
-    scale = new ObservablePoint()
-    domElement = document.createElement('div')
+    private domElement = document.createElement('div')
+    private _x = 0
+    private _y = 0
+    public readonly scale = new ObservablePoint()
 
     constructor() {
         document.body.appendChild(this.domElement)
@@ -30,6 +26,7 @@ class HtmlBlock {
         this.domElement.style.width = '100px'
         this.domElement.style.height = '100px'
         this.domElement.style.background = '#ff0000'
+        this.domElement.style.translate = '-50% -50%'
 
         this.x = 0
         this.y = 0
@@ -39,14 +36,14 @@ class HtmlBlock {
         })
     }
 
-    get x() { return this._x }
-    set x(x) {
+    public get x() { return this._x }
+    public set x(x) {
         this._x = x
         this.domElement.style.left = `${this._x}px`
     }
 
-    get y() { return this._y }
-    set y(y) {
+    public get y() { return this._y }
+    public set y(y) {
         this._y = y
         this.domElement.style.top = `${this._y}px`
     }
@@ -79,6 +76,4 @@ const blowfish = new Blowfish(
     defaultFuncSetParams,
 )
 
-window.addEventListener('resize', () => {
-    blowfish.Update(window.innerWidth, window.innerHeight)
-})
+window.addEventListener('resize', () => { blowfish.Update(window.innerWidth, window.innerHeight) })

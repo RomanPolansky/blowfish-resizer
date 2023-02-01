@@ -33,17 +33,12 @@ const BlowfishPoolEditorMixin: any = {
     },
 
     ResizeAllFish() {
-        const iframe = document.getElementById('game_iframe')!
-        let width = parseInt(iframe.style.width.replace('px', ''), 10)
-        let height = parseInt(iframe.style.height.replace('px', ''), 10)
-
-        const screenScale = Math.min(width / 960.0, height / 960.0)
-        width = Math.ceil(width / screenScale)
-        height = Math.ceil(height / screenScale)
-
-        for (let i = 0; i < this.fishs.length; i++) {
-            this.fishs[i].Update(width, height)
-        }
+        const iframe = document.getElementById('game_iframe') as HTMLIFrameElement
+        const { width } = iframe.style
+        iframe.style.width = '1px'
+        iframe.contentWindow?.dispatchEvent(new Event('resize'))
+        iframe.style.width = width
+        iframe.contentWindow?.dispatchEvent(new Event('resize'))
     },
 
     SetAspectRatio(aspectRatio: number) {

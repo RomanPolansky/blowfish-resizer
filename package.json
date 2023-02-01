@@ -2,7 +2,7 @@
   "name": "blowfish-resizer",
   "author": "any",
   "license": "MIT",
-  "version": "0.0.14-alpha.1",
+  "version": "0.0.14-alpha.0",
   "description": "blowfish resizer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,8 +35,9 @@
   },
   "scripts": {
     "test": "webpack serve --config ./webpack.config.js",
-    "build:editor": "node ./publish.config.js",
+    "install:all": "npm i && node -e \"console.log('INSTALL EDITOR DEPENDENCIES');\" && cd ./editor && npm i && cd ..",
+    "build:editor": "cd ./editor && npm run build && cd .. && node ./copyEditor.js",
     "build:index": "rollup -c",
-    "build:all": "npm run build:editor && npm run build:index"
+    "build:all": "npm run build:editor && npm run build:index && node -e \"console.log('BUILD COMPLETED');\""
   }
 }

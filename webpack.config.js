@@ -7,9 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const editorPath = path.resolve(__dirname, './editor/dist')
-if (!fs.existsSync(editorPath)) {
-    throw new Error('editor not found')
-}
+if (!fs.existsSync(editorPath)) { throw new Error('ERROR: EDITOR NOT FOUND') }
 
 export default {
     mode: 'development',
@@ -27,9 +25,7 @@ export default {
     ],
     resolve: {
         extensions: ['.ts', '.js'],
-        alias: {
-            'editor': path.resolve(__dirname, './editor'),
-        },
+        alias: { 'editor': path.resolve(__dirname, './editor') },
     },
     module: {
         rules: [

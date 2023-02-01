@@ -9,7 +9,10 @@ const outputDir = path.resolve(__dirname, './lib')
 const outputPath = path.resolve(outputDir, './editor')
 const editorPath = path.resolve(__dirname, './editor/dist')
 
-if (!fs.existsSync(editorPath)) throw new Error('editor not found')
+if (!fs.existsSync(editorPath)) throw new Error('ERROR: EDITOR NOT FOUND')
+
+// eslint-disable-next-line no-console
+console.log('EDITOR COPYING...')
 
 if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir)
 if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath)
@@ -20,3 +23,6 @@ files.forEach((file) => {
         fs.copyFileSync(path.resolve(editorPath, file), path.resolve(outputPath, file))
     }
 })
+
+// eslint-disable-next-line no-console
+console.log('EDITOR COPIED')
