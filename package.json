@@ -2,7 +2,7 @@
   "name": "blowfish-resizer",
   "author": "any",
   "license": "MIT",
-  "version": "0.0.14-alpha.0",
+  "version": "0.0.14-alpha.1",
   "description": "blowfish resizer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
