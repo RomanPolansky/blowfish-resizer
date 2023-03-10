@@ -2,7 +2,7 @@
   "name": "blowfish-resizer",
   "author": "any",
   "license": "MIT",
-  "version": "0.0.14-alpha.0",
+  "version": "0.0.14-alpha.1",
   "description": "blowfish resizer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,9 +29,6 @@
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0"
-  },
-  "dependencies": {
-    "@pixi/utils": "^6.5.1"
   },
   "scripts": {
     "test": "webpack serve --config ./webpack.config.js",

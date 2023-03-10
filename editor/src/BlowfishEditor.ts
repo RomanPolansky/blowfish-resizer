@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+import { EventEmitter } from '@pixi/utils';
 import IBlowfish from '../interfaces/IBlowfish';
 import IBlowfishElement from '../interfaces/IBlowfishElement';
 import IBlowfishPool from '../interfaces/IBlowfishPool';
@@ -13,26 +14,32 @@ declare global {
 }
 
 export interface IMixedPool extends IBlowfishPool {
+    emitter: EventEmitter
     selectedFish: IBlowfish | null
     selectedElement: IBlowfishElement | null
     aspectRatio: number
-    InitMixin: () => void
-    ResizeAllFish: () => void
-    SetAspectRatio: (aspectRatio: number) => void
-    SetSelectFish: (fish: IBlowfish) => void
-    SetSelectElement: (element: IBlowfishElement) => void
-    EmitUpdate: () => void
+    ApplyMixin(): void
+    Init(): void
+    ResizeAllFish(): void
+    SetAspectRatio(aspectRatio: number): void
+    SetSelectFish(fish: IBlowfish): void
+    SetSelectElement(element: IBlowfishElement): void
+    EmitUpdate(): void
 }
 
 const BlowfishPoolEditorMixin: any = {
-    InitMixin() {
+    ApplyMixin(this: IMixedPool) {
+        this.emitter = new EventEmitter()
         this.selectedFish = null
         this.selectedElement = null
         this.aspectRatio = 1.0
-        this.emit('update')
     },
 
-    ResizeAllFish() {
+    Init() {
+        this.emitter.emit('update')
+    },
+
+    ResizeAllFish(this: IMixedPool) {
         const iframe = document.getElementById('game_iframe') as HTMLIFrameElement
         const { width } = iframe.style
         iframe.style.width = '1px'
@@ -41,25 +48,25 @@ const BlowfishPoolEditorMixin: any = {
         iframe.contentWindow?.dispatchEvent(new Event('resize'))
     },
 
-    SetAspectRatio(aspectRatio: number) {
+    SetAspectRatio(this: IMixedPool, aspectRatio: number) {
         this.aspectRatio = aspectRatio
-        this.emit('update')
+        this.emitter.emit('update')
     },
 
-    SetSelectFish(fish: IBlowfish) {
+    SetSelectFish(this: IMixedPool, fish: IBlowfish) {
         this.selectedFish = fish
-        this.emit('update')
+        this.emitter.emit('update')
     },
 
-    SetSelectElement(element: IBlowfishElement) {
+    SetSelectElement(this: IMixedPool, element: IBlowfishElement) {
         this.selectedElement = element
-        this.emit('update')
+        this.emitter.emit('update')
     },
 
-    EmitUpdate() {
-        this.emit('update')
+    EmitUpdate(this: IMixedPool) {
+        this.emitter.emit('update')
     },
-};
+}
 
 export default class BlowfishEditor {
     pool!: IMixedPool
@@ -83,6 +90,7 @@ export default class BlowfishEditor {
     Init(pool: IBlowfishPool) {
         Object.assign(pool, BlowfishPoolEditorMixin)
         this.pool = pool as IMixedPool
+        this.pool.ApplyMixin()
 
         this.elementSelector = new BlowfishElementSelector(this.pool, this)
         const listElements = document.getElementById('rightbar__listElements')!
@@ -96,11 +104,11 @@ export default class BlowfishEditor {
         const elementEditor = document.getElementById('editor')!
         elementEditor.appendChild(this.paramsEditor.HTMLElement)
 
-        this.pool.on('update', () => this.elementSelector.Update())
-        this.pool.on('update', () => this.aspectRatioView.Update())
-        this.pool.on('update', () => this.paramsEditor.Update())
+        this.pool.emitter.on('update', () => this.elementSelector.Update())
+        this.pool.emitter.on('update', () => this.aspectRatioView.Update())
+        this.pool.emitter.on('update', () => this.paramsEditor.Update())
 
-        this.pool.InitMixin()
+        this.pool.Init()
 
         this.SetAspectRatio(1.0)
     }

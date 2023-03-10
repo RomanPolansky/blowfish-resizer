@@ -1,7 +1,6 @@
-import { EventEmitter } from '@pixi/utils'
 import IBlowfish from './IBlowfish'
 
-export default interface IBlowfishPool extends EventEmitter {
+export default interface IBlowfishPool {
     fishs: IBlowfish[]
     Add: (blowfish: IBlowfish) => void
 }

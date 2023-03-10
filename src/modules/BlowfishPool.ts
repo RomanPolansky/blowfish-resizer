@@ -1,4 +1,3 @@
-import { EventEmitter } from '@pixi/utils'
 import IBlowfishPool from '../interfaces/IBlowfishPool'
 import IBlowfish from '../interfaces/IBlowfish'
 import IContentWindow from '../interfaces/IContentWindow'
@@ -7,13 +6,9 @@ declare global {
     interface Window extends IContentWindow {}
 }
 
-export default class BlowfishPool extends EventEmitter implements IBlowfishPool {
+export default class BlowfishPool implements IBlowfishPool {
     public fishs: IBlowfish[] = []
     public onChangeCallback: Function | null = null
-
-    private constructor() {
-        super()
-    }
 
     Add(blowfish: IBlowfish) {
         this.fishs.push(blowfish);
